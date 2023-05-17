@@ -20,3 +20,11 @@ words can be made:
 - backwards and forwards
 
 Players can create or join game rooms and take turns placeing a letter on a board.
+
+#
+
+# learn about socket.io:
+- https://socket.io/get-started/chat
+- https://devcenter.heroku.com/articles/node-websockets
+- https://socket.io/get-started/private-messaging-part-1/
+- https://socket.io/docs/v4/
