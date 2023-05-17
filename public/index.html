@@ -1,24 +1,117 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Socket.IO chat</title>
-    <style>
-      body { margin: 0; padding-bottom: 3rem; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Jake's Game</title>
+</head>
+<body>
+    <div id="container">
+        <div id="title_section">
+            <!-- dog from https://www.google.co.uk/search?q=sausage+dog+icon&ei=vujnY7mfBte5gAatkZ4w&ved=0ahUKEwi59vq4lo79AhXXHMAKHa2IBwYQ4dUDCA8&uact=5&oq=sausage+dog+icon&gs_lcp=Cgxnd3Mtd2l6LXNlcnAQAzIFCAAQgAQyCwgAEBYQHhDxBBAKMgoIABAWEB4QDxAKMgkIABAWEB4Q8QQyBQgAEIYDMgUIABCGAzIFCAAQhgM6CggAEEcQ1gQQsAM6DQgAEEcQ1gQQyQMQsAM6CAgAEJIDELADOgcIABCwAxBDOg0IABDkAhDWBBCwAxgBOgwILhDIAxCwAxBDGAI6BwgAEMkDEEM6CAgAEIAEELEDOgUIABCRAjoICAAQgAQQyQM6BQguEJECOgYIABAWEB46CAgAEBYQHhAKSgQIQRgASgQIRhgBULUDWNQqYLUraAZwAXgAgAFQiAHGBZIBAjEwmAEAoAEByAERwAEB2gEGCAEQARgJ2gEGCAIQARgI&sclient=gws-wiz-serp#imgrc=oYUx61NwW92ZwM -->
+            <img class="dog_img" src="images/dog_1_crop_3.png" alt="dachsund left tail side">
+            <h1>Word Dog</h1>
+            <img class="dog_img" src="images/dog_2_crop_3.png" alt="dachsund right head side">
+        </div>
+       
+        <div id="container_5x5">
+            <!-- <div id="A1" class="box_5x5" onclick="document.getElementById('A1').focus(); return true;">0</div> -->
+            <!-- <div id="A2" class="box_5x5" onclick='$("#A2").focus();'>1</div> -->
+            <div id="A1" class="box_5x5"></div>
+            <div id="A2" class="box_5x5"></div>
+            <div id="A3" class="box_5x5"></div>
+            <div id="A4" class="box_5x5"></div>
+            <div id="A5" class="box_5x5"></div>
 
-      #form { background: rgba(0, 0, 0, 0.15); padding: 0.25rem; position: fixed; bottom: 0; left: 0; right: 0; display: flex; height: 3rem; box-sizing: border-box; backdrop-filter: blur(10px); }
-      #input { border: none; padding: 0 1rem; flex-grow: 1; border-radius: 2rem; margin: 0.25rem; }
-      #input:focus { outline: none; }
-      #form > button { background: #333; border: none; padding: 0 1rem; margin: 0.25rem; border-radius: 3px; outline: none; color: #fff; }
+            <div id="B1" class="box_5x5"></div>
+            <div id="B2" class="box_5x5"></div>
+            <div id="B3" class="box_5x5"></div>
+            <div id="B4" class="box_5x5"></div>
+            <div id="B5" class="box_5x5"></div>
 
-      #messages { list-style-type: none; margin: 0; padding: 0; }
-      #messages > li { padding: 0.5rem 1rem; }
-      #messages > li:nth-child(odd) { background: #efefef; }
-    </style>
-  </head>
-  <body>
-    <ul id="messages"></ul>
-    <form id="form" action="">
-      <input id="input" autocomplete="off" /><button>Send</button>
-    </form>
-  </body>
+            <div id="C1" class="box_5x5"></div>
+            <div id="C2" class="box_5x5"></div>
+            <div id="C3" class="box_5x5"></div>
+            <div id="C4" class="box_5x5"></div>
+            <div id="C5" class="box_5x5"></div>
+
+            <div id="D1" class="box_5x5"></div>
+            <div id="D2" class="box_5x5"></div>
+            <div id="D3" class="box_5x5"></div>
+            <div id="D4" class="box_5x5"></div>
+            <div id="D5" class="box_5x5"></div>
+
+            <div id="E1" class="box_5x5"></div>
+            <div id="E2" class="box_5x5"></div>
+            <div id="E3" class="box_5x5"></div>
+            <div id="E4" class="box_5x5"></div>
+            <div id="E5" class="box_5x5"></div>
+        </div>
+
+        <div id="player_container">
+            <h4 id="player_1_text">Player 1: 0</h4>
+            <h4 id="player_2_text">Player 2: 0</h4>
+        </div>
+
+        <div id="mobile_keyboard">
+            <div id="keyboard_keys_container">
+                <div id="keyboard_row1">
+                    <div id="keyQ" class="keyboard_key">Q</div> 
+                    <div id="keyW" class="keyboard_key">W</div>
+                    <div id="keyE" class="keyboard_key">E</div> 
+                    <div id="keyR" class="keyboard_key">R</div>
+                    <div id="keyT" class="keyboard_key">T</div> 
+                    <div id="keyY" class="keyboard_key">Y</div>
+                    <div id="keyU" class="keyboard_key">U</div> 
+                    <div id="keyI" class="keyboard_key">I</div>
+                    <div id="keyO" class="keyboard_key">O</div> 
+                    <div id="keyP" class="keyboard_key">P</div>
+                </div>
+                <div id="keyboard_row2">
+                    <div id="keyA" class="keyboard_key">A</div> 
+                    <div id="keyS" class="keyboard_key">S</div>
+                    <div id="keyD" class="keyboard_key">D</div> 
+                    <div id="keyF" class="keyboard_key">F</div>
+                    <div id="keyG" class="keyboard_key">G</div> 
+                    <div id="keyH" class="keyboard_key">H</div>
+                    <div id="keyJ" class="keyboard_key">J</div> 
+                    <div id="keyK" class="keyboard_key">K</div>
+                    <div id="keyL" class="keyboard_key">L</div> 
+                </div>
+                <div id="keyboard_row3">
+                    <div id="keyZ" class="keyboard_key">Z</div>
+                    <div id="keyX" class="keyboard_key">X</div> 
+                    <div id="keyC" class="keyboard_key">C</div>
+                    <div id="keyV" class="keyboard_key">V</div> 
+                    <div id="keyB" class="keyboard_key">B</div>
+                    <div id="keyN" class="keyboard_key">N</div> 
+                    <div id="keyM" class="keyboard_key">M</div>
+                </div>              
+            </div>
+           <div id="keyboard_buttons_container">
+                <div id="keyboard_backspace" class="keyboard_special">delete</div>
+                <div id="keyboard_enter" class="keyboard_special">enter</div>
+           </div>
+        </div>
+
+
+
+        <div id="log_container">
+            <ul id="game_log">
+                
+            </ul>
+        </div>
+        <div>
+            
+        </div>
+
+        <div id="footer"><p class="footer_text">developed Jake Knox, 2023</p></div>
+    </div>
+    <p id="output"></p>
+    <!-- <script src="iDictionary.js"></script> -->
+    <!-- <script src="helper.js" type="module"></script> -->
+    <script src="app.js" type="module"></script>
+</body>
 </html>

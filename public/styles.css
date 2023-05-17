@@ -1,0 +1,307 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Carrois+Gothic&family=Caveat&family=Cinzel&family=Domine&family=Open+Sans:wght@300&family=Orbitron&family=Unbounded:wght@300&family=VT323&family=Zen+Tokyo+Zoo&display=swap');
+
+
+* {
+    /* font-family: 'Carrois Gothic', sans-serif; */
+    /* font-family: 'Caveat', cursive; */
+    /* font-family: 'Cinzel', serif; */
+    /* font-family: 'Domine', serif; */
+    /* font-family: 'Open Sans', sans-serif; */
+    /* font-family: 'Orbitron', sans-serif; */
+    font-family: 'Unbounded', cursive;
+    /* font-family: 'VT323', monospace; */
+    /* font-family: 'Zen Tokyo Zoo', cursive; */
+
+    /* 
+    #002a5c dark blue
+    #6dad3b light green
+    #b2b7bb grey
+    #667f9d pale blue
+    #497428 dark green
+    */
+}
+
+
+body{
+    border: 0px;
+    padding: 0px;
+
+    background-color: rgb(248, 208, 134);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#container{
+    /* width: 500px; */
+    width: 100%;
+    max-width: 370px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    /* border: 1px solid black; */
+}
+
+#title_section{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    height: 10vh;
+
+    margin-bottom: 2vh;
+}
+
+#title_section h1{
+    height: 100%;
+    /* background-color: white; */
+    text-align: center;
+    vertical-align: middle;    
+    line-height: 10vh;
+
+    /* border-left: 1px solid black;   */
+    
+}
+.dog_img{
+    height: 100%;
+    width: auto;
+    /* border-left: 1px solid black;    */
+
+}
+
+#container_5x5{
+
+    width: 370px;
+    height: 370px;
+
+    display: flex;
+    flex-wrap: wrap;
+
+    justify-content: space-around;
+    align-items: flex-start;
+
+    background-color: #002a5c;
+
+    border: 2px solid #002a5c;
+    border-radius: 5px;
+    /* box-shadow: 5px 5px #002a5c; */
+
+}
+
+.box_5x5{   
+    /* height: 80px;
+    width: 80px; */
+
+    height: 15%;
+    width: 15%; 
+
+    padding: 1%;
+    margin: 0.5%;
+
+    background-color: #b2b7bb;
+    border: 1px solid darkgray;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.box_5x5:focus {
+    outline: none;
+    /* text-align: center; */
+
+}
+
+.locked{
+    background-color: green;
+}
+
+p{
+    font-size: 3em;
+    padding: 0px;
+    margin: 0px;
+    text-align: center;
+    vertical-align: middle;
+    pointer-events: none;
+}
+
+#player_container{
+    width: 100%;
+    height: 5vh; 
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    /* line-height: 3vh; */
+    margin-bottom: 0vh;
+    /* border: 2px solid green; */
+
+}
+   
+#player_1_text{
+    text-align: center;
+    width: 50%;
+    /* height: 100%; */
+
+    
+
+    color: blue;
+    border: 2px solid blue;
+    /* border: 2px solid rgb(248, 208, 134); */
+}
+#player_2_text{
+    text-align: center;
+    width: 50%;
+
+    
+
+    color: red;
+    border: 2px solid rgb(248, 208, 134);
+}
+
+#mobile_keyboard{
+
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content:flex-start;
+
+    text-align: center;    
+    vertical-align: middle;
+
+    margin-bottom: 3vh;
+}
+
+#keyboard_keys_container{
+    width:100%;
+    height: 110px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;   
+
+}
+
+#keyboard_row1{
+    width: 100%;
+    height: 33%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+#keyboard_row2{
+    width: 100%;
+    height: 33%;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+#keyboard_row3{
+    width: 100%;
+    height: 33%;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.keyboard_key{
+
+    width: 8.3%;
+    height: 30px;
+
+    padding: 2px;
+    margin: 1px;
+
+    background-color: whitesmoke;
+    border-radius: 5px;
+
+    line-height: 185%;
+
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
+}
+
+.keyboard_key:active{
+
+    background-color: lightgray;
+  
+}
+
+#keyboard_buttons_container{
+    margin-top: 10px;
+    width:100%;
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
+    
+}
+.keyboard_special{
+    
+    width: 30%;
+    height: 100%;
+    padding: 1px;
+    
+    margin: 1px;
+    border-radius: 5px;
+
+    line-height: 300%;
+
+}
+#keyboard_backspace{    
+    background-color: palevioletred;
+}
+#keyboard_enter{    
+    background-color: palegreen;
+}
+
+
+
+
+
+#log_container{
+    width: 100%;
+    height: 30vh;
+    background-color: #b2b7bb;
+    overflow: scroll;
+}
+
+#footer{
+    margin-top: 10vh;
+    margin-bottom: 2vh;
+}
+
+.footer_text{
+    font-size: 1em;
+}
+
+#output{
+    /* height: 100vh; */
+    /* max-width: 700px; */
+    font-size: small;
+    word-wrap:break-word;
+}
