@@ -15,9 +15,9 @@ looks like this:
 🔲  🔲  🔲  🔲  🔲
 
 words can be made:
-- vertically/horizontally
-- diagonally
-- backwards and forwards
+- vertically and horizontally ↕️ ↔️
+- diagonally ↖️ ↗️ ↘️ ↙️ 
+- backwards and forwards ⬅️ ➡️
 
 Players can create or join game rooms and take turns placeing a letter on a board.
 
