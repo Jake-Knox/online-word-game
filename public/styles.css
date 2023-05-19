@@ -91,6 +91,8 @@ body{
     -webkit-user-select: none; /* Safari */
     -ms-user-select: none; /* IE 10 and IE 11 */
     user-select: none; /* Standard syntax */
+
+    border: 1px solid red;
 }
 
 .join-create-button{
@@ -105,6 +107,33 @@ body{
     text-align: center;
     background-color: palevioletred;
 
+}
+
+#online-join-form{
+
+    margin-top: 0px;
+    width:100%;
+    height: 50px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+
+    border: 1px solid green;
+}
+#online-room-info{
+    
+    margin-top: 0px;
+    width:100%;
+    height: 50px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+
+    border: 1px solid blue;
 }
 
 

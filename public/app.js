@@ -28,9 +28,27 @@ import { dictX2Letter, dictX3Letter, dictX4Letter, dictX5Letter }  from "./iDict
 import { dictY2Letter, dictY3Letter, dictY4Letter, dictY5Letter }  from "./iDictionary.js";
 import { dictZ2Letter, dictZ3Letter, dictZ4Letter, dictZ5Letter }  from "./iDictionary.js";
 
-//console.log(dictIncludesA);
-
 // console.log("game start");
+
+// online buttons setup
+
+const toggleDisplay = (element) => {
+    if(element.style.display == "none")
+    {
+        element.style.display = "flex";
+    }
+    else{
+        element.style.display = "none";
+    }
+}
+const onlineBtns = document.getElementById("online-buttons");
+const onlineJoinForm = document.getElementById("online-join-form");
+const onlineRoomInfo = document.getElementById("online-room-info");
+toggleDisplay(onlineJoinForm);
+toggleDisplay(onlineRoomInfo);
+
+const btnJoinRoom = document.getElementById("btn-join");
+const btnCreateRoom = document.getElementById("btn-create");
 
 // Tile array setup
 const tileArray = [];
@@ -122,6 +140,26 @@ const resetMove = () => {
     lastTileUsed = null;    
 }
 resetMove();
+
+
+btnJoinRoom.addEventListener("click", () => {
+    console.log("join room click");
+    
+    toggleDisplay(onlineBtns);
+    toggleDisplay(onlineJoinForm);
+})
+
+btnCreateRoom.addEventListener("click", () => {
+    console.log("create room click");
+
+    toggleDisplay(onlineBtns);
+    toggleDisplay(onlineRoomInfo);
+
+    // make a new room with sockets
+    //
+})
+
+
 
 // setting up button click on each tile
 for(let i = 0; i < tileArray.length; i++){   
