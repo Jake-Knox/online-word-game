@@ -63,7 +63,7 @@ io.on('connection', (socket) => {
   let username = createName();
   io.to(socket.id).emit("player name", username);
   users.push([socket.id,username]);
-  console.log(`${users.length} users: ${users}`);
+  console.log(`${users.length} users`);
 
   socket.on('disconnect', () => {
     // console.log(`user disconnected, id: ${socket.id}`);

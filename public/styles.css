@@ -377,6 +377,22 @@ p{
     overflow: scroll;
 }
 
+
+#log-button{
+    position: fixed;
+    left: 1vh;
+    bottom: 1vh;
+
+    height: 5vh;
+    width: 5vh;
+    background-color: #b2b7bb;
+    border: 1px solid #b2b7bb;
+    border-radius: 5px;
+
+    font-size:small;    
+    user-select: none;
+}
+
 #footer{
     margin-top: 10vh;
     margin-bottom: 2vh;

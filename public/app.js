@@ -56,6 +56,8 @@ const btnJoinRoom = document.getElementById("btn-join");
 const btnCreateRoom = document.getElementById("btn-create");
 const roomCodeText = document.getElementById("room-code-text");
 
+const logButton = document.getElementById("log-button");
+
 //
 // Tile array setup
 //
@@ -123,6 +125,7 @@ const player2Text = document.getElementById("player_2_text");
 const keyboardBackspace = document.getElementById("keyboard_backspace")
 const keyboardEnter = document.getElementById("keyboard_enter")
 const gameLog = document.getElementById("game_log");
+const logContainer = document.getElementById("log_container");
 
 //
 // game setup
@@ -186,12 +189,16 @@ roomExitButton.addEventListener("click", () => {
     toggleDisplay(onlineRoomInfo);
     toggleDisplay(onlineBtns);
 })
+logButton.addEventListener("click", () => {
+    toggleDisplay(logContainer);
+})
+
 
 
 // socket server responses
 socket.on('player name', (id) => {
     myName = id;
-    console.log(`Me: ${myName}`);
+    console.log(`Me: ${myName}`);    
 });
 
 
@@ -315,7 +322,7 @@ for (let i = 0; i< keyboardKeys.length; i++){
         let keyVal = keyboardKeys[i].innerText;
 
         if(lastTileUsed != null){
-            console.log(`key press ${keyVal}`);            
+            // console.log(`key press ${keyVal}`);            
             lastTileUsed.innerHTML = (`<p>${(keyVal).toLocaleUpperCase()}</p>`);
             lastTileUsed.style.backgroundColor = "#667f9d";
             lastTileUsed.focus();  
