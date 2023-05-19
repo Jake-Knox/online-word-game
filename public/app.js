@@ -1,4 +1,4 @@
-//import { dictIncludesA, dictIncludesB, dictIncludesC, dictIncludesD, dictIncludesE, dictIncludesF, dictIncludesG, dictIncludesH, dictIncludesI, dictIncludesJ, dictIncludesK, dictIncludesL, dictIncludesM, dictIncludesN, dictIncludesO, dictIncludesP, dictIncludesQ, dictIncludesR, dictIncludesS, dictIncludesT, dictIncludesU, dictIncludesV, dictIncludesW, dictIncludesX, dictIncludesY, dictIncludesZ } from "./iDictionary.js";
+var socket = io();
 
 // imports from dictionary
 import { dictA2Letter, dictA3Letter, dictA4Letter, dictA5Letter }  from "./iDictionary.js";
@@ -30,8 +30,9 @@ import { dictZ2Letter, dictZ3Letter, dictZ4Letter, dictZ5Letter }  from "./iDict
 
 // console.log("game start");
 
+//
 // online buttons setup
-
+//
 const toggleDisplay = (element) => {
     if(element.style.display == "none")
     {
@@ -42,15 +43,20 @@ const toggleDisplay = (element) => {
     }
 }
 const onlineBtns = document.getElementById("online-buttons");
-const onlineJoinForm = document.getElementById("online-join-form");
+const onlineJoinDiv = document.getElementById("online-join");
 const onlineRoomInfo = document.getElementById("online-room-info");
-toggleDisplay(onlineJoinForm);
+toggleDisplay(onlineJoinDiv);
 toggleDisplay(onlineRoomInfo);
+const joinNameInput = document.getElementById("join-name");
+const joinExitButton = document.getElementById("join-form-exit")
 
+const onlineJoinForm = document.getElementById("online-join-form");
 const btnJoinRoom = document.getElementById("btn-join");
 const btnCreateRoom = document.getElementById("btn-create");
 
+//
 // Tile array setup
+//
 const tileArray = [];
 const tile_A1 = document.getElementById("A1");
 const tile_A2 = document.getElementById("A2");
@@ -77,16 +83,8 @@ const tile_E2 = document.getElementById("E2");
 const tile_E3 = document.getElementById("E3");
 const tile_E4 = document.getElementById("E4");
 const tile_E5 = document.getElementById("E5");
-
 tileArray.push(tile_A1, tile_A2, tile_A3, tile_A4, tile_A5, tile_B1, tile_B2, tile_B3, tile_B4, tile_B5, tile_C1, tile_C2, tile_C3, tile_C4, tile_C5, tile_D1, tile_D2, tile_D3, tile_D4, tile_D5, tile_E1, tile_E2, tile_E3, tile_E4, tile_E5);
-// console.log(tileArray)
-
 let charArray = ["","","","","","","","","","","","","","","","","","","","","","","","",""]
-//console.log(charArray.length)
-
-// other elements
-const player1Text = document.getElementById("player_1_text");
-const player2Text = document.getElementById("player_2_text");
 
 // keyboard
 const keyboardQ = document.getElementById("keyQ");
@@ -115,16 +113,18 @@ const keyboardV = document.getElementById("keyV");
 const keyboardB = document.getElementById("keyB");
 const keyboardN = document.getElementById("keyN");
 const keyboardM = document.getElementById("keyM");
-
 const keyboardKeys = [keyboardA,keyboardB,keyboardC,keyboardD,keyboardE,keyboardF,keyboardG, keyboardH, keyboardI, keyboardJ,keyboardK, keyboardL, keyboardM, keyboardN, keyboardO, keyboardP, keyboardQ, keyboardR, keyboardS, keyboardT, keyboardU, keyboardV, keyboardW, keyboardX, keyboardY, keyboardZ];
-//console.log(keyboardKeys)
 
+// other elements
+const player1Text = document.getElementById("player_1_text");
+const player2Text = document.getElementById("player_2_text");
 const keyboardBackspace = document.getElementById("keyboard_backspace")
 const keyboardEnter = document.getElementById("keyboard_enter")
-
 const gameLog = document.getElementById("game_log");
 
+//
 // game setup
+//
 let playerTurn = 1; // player1/ player2
 let player1Points = 0;
 let player2Points = 0;
@@ -132,21 +132,21 @@ let player2Points = 0;
 let moveMade = true;
 let lastTileUsed = null;
 
-
-// start of functions
-
 const resetMove = () => {
     moveMade = false;
     lastTileUsed = null;    
 }
 resetMove();
 
+//
+// functions + listeners
+//
 
 btnJoinRoom.addEventListener("click", () => {
     console.log("join room click");
     
     toggleDisplay(onlineBtns);
-    toggleDisplay(onlineJoinForm);
+    toggleDisplay(onlineJoinDiv);
 })
 
 btnCreateRoom.addEventListener("click", () => {
@@ -159,7 +159,30 @@ btnCreateRoom.addEventListener("click", () => {
     //
 })
 
+onlineJoinForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    let inputName = joinNameInput.value;
+    if (inputName && inputName.length == 5) {
+        console.log(`join room:${inputName}`);
 
+        socket.emit('join room', inputName); // for sockets 
+        joinNameInput.value = '';
+    }
+    else{
+        console.log("Name needs to be 5 letters");
+    }
+});
+joinExitButton.addEventListener("click", () => {
+    joinNameInput.value = '';
+    toggleDisplay(onlineJoinDiv);
+    toggleDisplay(onlineBtns);
+})
+
+
+
+//
+// game code
+//
 
 // setting up button click on each tile
 for(let i = 0; i < tileArray.length; i++){   

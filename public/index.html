@@ -19,9 +19,15 @@
             <div id="btn-join" class="join-create-button">join</div>
             <div id="btn-create" class="join-create-button">create</div>
         </div> 
-        <div id="online-join-form">
-            <p>input box</p>
-        </div>    
+        <div id="online-join">
+            <button type="exit" id="join-form-exit" class="btn-form">X</button>     
+            <form id="online-join-form" action="">      
+                <label for="join-name">Room Code:</label>
+                <input type="text" id="join-name" name="join-name" autocomplete="off" maxlength="5">
+                <input type="submit" value=">" class="btn-form">
+            </form>    
+        </div>
+        
         <div id="online-room-info">
             <p>info</p>
         </div>    
@@ -120,8 +126,7 @@
         <div id="footer"><p class="footer_text">developed Jake Knox, 2023</p></div>
     </div>
     <p id="output"></p>
-    <!-- <script src="iDictionary.js"></script> -->
-    <!-- <script src="helper.js" type="module"></script> -->
+    <script src="/socket.io/socket.io.js"></script>
     <script src="app.js" type="module"></script>
 </body>
 </html>
