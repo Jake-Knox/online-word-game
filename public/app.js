@@ -166,14 +166,14 @@ btnCreateRoom.addEventListener("click", () => {
 onlineJoinForm.addEventListener('submit', function(e) {
     e.preventDefault();
     let inputName = joinNameInput.value;
-    if (inputName && inputName.length == 5) {
+    if (inputName && inputName.length == 6) {
         console.log(`join room:${inputName}`);
 
         socket.emit('join room', inputName); // for sockets 
         joinNameInput.value = '';
     }
     else{
-        console.log("Name needs to be 5 letters");
+        console.log("Name needs to be 6 letters");
     }
 });
 joinExitButton.addEventListener("click", () => {
@@ -191,7 +191,7 @@ roomExitButton.addEventListener("click", () => {
 // socket server responses
 socket.on('player name', (id) => {
     myName = id;
-    console.log(myName);
+    console.log(`Me: ${myName}`);
 });
 
 

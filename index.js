@@ -13,19 +13,61 @@ app.get('/', (req, res) => {
 });
 
 let nameChars = ["0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f"];
-let names = [];
+let users = [];
+
+const findName = (searchName) => {
+  return users.some(row => row.includes(searchName));
+}
 
 const createName = () => {
-  
+  let newName = ""; 
+  let nameUnique = true;
+  while (nameUnique)   
+  {
+    for (let i = 0; i < 6; i++ )
+    {
+        const random = Math.floor(Math.random() * nameChars.length);
+        newName += nameChars[random];
+    } 
+    // console.log(`new name: ${newName}`);
+    
+    if(findName(newName)){
+      console.log(`${newName} already in use, finding new name`);
+    }
+    else{
+      // console.log(`${newName} available`);
+      nameUnique = false;
+    }    
+  }     
+  return newName;
+}
+
+const removeUser = (userID) => {
+
+  // users.some(row => row.includes(userID));
+
+  for(let i = 0; i < users.length; i++)
+  {
+    if(users[i][0] == userID){
+      const index = users.indexOf(users[i]);
+      if (index > -1) {
+        users.splice(index, 1); // 2nd parameter means remove one item only
+      }
+    }
+  } 
 }
 
 io.on('connection', (socket) => {
-  console.log('user connected, id: ' + socket.id);
-  io.to(socket.id).emit("get id", socket.id);
+  // console.log('user connected, id: ' + socket.id);
 
+  let username = createName();
+  io.to(socket.id).emit("player name", username);
+  users.push([socket.id,username]);
+  console.log(`${users.length} users: ${users}`);
 
   socket.on('disconnect', () => {
-    console.log(`user disconnected, id: ${socket.id}`);
+    // console.log(`user disconnected, id: ${socket.id}`);
+    removeUser(socket.id);
   });
 
 
