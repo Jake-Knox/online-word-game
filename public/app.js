@@ -49,10 +49,12 @@ toggleDisplay(onlineJoinDiv);
 toggleDisplay(onlineRoomInfo);
 const joinNameInput = document.getElementById("join-name");
 const joinExitButton = document.getElementById("join-form-exit")
+const roomExitButton = document.getElementById("room-info-exit")
 
 const onlineJoinForm = document.getElementById("online-join-form");
 const btnJoinRoom = document.getElementById("btn-join");
 const btnCreateRoom = document.getElementById("btn-create");
+const roomCodeText = document.getElementById("room-code-text");
 
 //
 // Tile array setup
@@ -125,6 +127,8 @@ const gameLog = document.getElementById("game_log");
 //
 // game setup
 //
+let myName = "";
+
 let playerTurn = 1; // player1/ player2
 let player1Points = 0;
 let player2Points = 0;
@@ -177,6 +181,20 @@ joinExitButton.addEventListener("click", () => {
     toggleDisplay(onlineJoinDiv);
     toggleDisplay(onlineBtns);
 })
+roomExitButton.addEventListener("click", () => {
+    joinNameInput.value = '';
+    toggleDisplay(onlineRoomInfo);
+    toggleDisplay(onlineBtns);
+})
+
+
+// socket server responses
+socket.on('player name', (id) => {
+    myName = id;
+    console.log(myName);
+});
+
+
 
 
 
@@ -386,17 +404,7 @@ for (let i = 0; i< keyboardKeys.length; i++){
                 default: console.log("ERROR in ")
 
             }
-
-            //charArray[i] = keyVal.toLocaleUpperCase();
-            console.log(charArray);
-            // tileArray[i].innerHTML = (`<p>${(logKey.key).toLocaleUpperCase()}</p>`);
-            // tileArray[i].style.backgroundColor = "#667f9d";
-            // lastTileUsed = tileArray[i];
-            // lastTileUsed.focus();    
-            // moveMade = true;    
-            
-            // charArray[i] = logKey.key.toLocaleUpperCase();
-
+            // console.log(charArray);
         }
     })
 }
@@ -521,10 +529,6 @@ const endTurn = () => {
 const checkString = (newChar, inputStr) => {
 
     let inputLC = inputStr.toLowerCase();
-
-    //console.log(`input: ${newChar} - entering switch`);
-
-    //console.log(inputStr.length);
 
     // code has been collapsed - use arrow to see
     switch(newChar)

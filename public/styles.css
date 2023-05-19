@@ -92,27 +92,29 @@ body{
     -ms-user-select: none; /* IE 10 and IE 11 */
     user-select: none; /* Standard syntax */
 
-    border: 1px solid red;
+    /* border: 1px solid red; */
 }
 
 .join-create-button{
     width: 30%;
     height: 100%;
     padding: 1px;
+
+    
     
     margin: 1px;
     border-radius: 5px;
 
-    line-height: 300%;
+    line-height: 200%;
+    font-size: 1.5em;
     text-align: center;
-    background-color: palevioletred;
+    background-color: lightseagreen;
 
 }
 
 #online-join{
 
     margin-top: 0px;
-    padding-left: 2vw;
     width:100%;
     height: 50px;
     margin-bottom: 20px;
@@ -121,9 +123,10 @@ body{
     justify-content: flex-start;
     align-items: center;
 
-    border: 1px solid green;
+    /* border: 1px solid green; */
 }
 #online-join-form{
+    width:100%;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
@@ -137,10 +140,10 @@ body{
     margin-bottom: 20px;
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: flex-start;
     align-items: center;
 
-    border: 1px solid blue;
+    /* border: 1px solid blue; */
 }
 
 #join-name{
@@ -152,6 +155,12 @@ body{
 .btn-form{
     height: 4vh;
     width: 4vh;
+    margin-left: 1vh;
+}
+
+#room-code-text{
+    font-size: 2em;
+    margin-left: 3vh;
 }
 
 #container_5x5{
