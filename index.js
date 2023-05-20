@@ -5,7 +5,8 @@ const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
 
-var path = require('path')
+var path = require('path');
+const { start } = require('repl');
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => {
@@ -71,7 +72,7 @@ const createRoom = (name) => {
   rooms.push(newGame)
 }
 
-const joinRoom = (name, userID) => {
+const joinRoom = (name, pName) => {
   
   for(let i = 0; i < rooms.length; i ++){
     //check for the correct room name
@@ -81,22 +82,44 @@ const joinRoom = (name, userID) => {
       if(rooms[i].p1 == '')
       {
         // no p1, join game
-        rooms[i].p1 = userID
+        rooms[i].p1 = pName
+        return true;
       }
       else if(rooms[i].p2 == '')
       {
         // no p2, join game
-        rooms[i].p2 = userID
+        rooms[i].p2 = pName
+        return true;
       }
       else
       {
         // add feature to view a game without playing here?
-        console.log(`Game: ${name} is full. User ${userID} cannot join.`)
+        console.log(`Game: ${name} is full. User ${pName} cannot join.`)
+        return false;
       }
     }   
   }
 }
 
+const userJoinRoom = (room) => {
+  for(let i = 0; i < rooms.length; i ++)
+  {
+    if(rooms[i].room == room)
+    {
+      io.to(room).emit("user join room", rooms[i]);
+    }
+  }
+}
+
+const updateRoom = (room) => {
+  for(let i = 0; i < rooms.length; i ++)
+  {
+    if(rooms[i].room == room)
+    {
+      io.to(room).emit("update room", rooms[i]);
+    }
+  }
+}
 
 io.on('connection', (socket) => {
   // console.log('user connected, id: ' + socket.id);
@@ -111,7 +134,7 @@ io.on('connection', (socket) => {
     removeUser(socket.id);
   });
 
-  socket.on('new room', (newRoom) => {
+  socket.on('new room', (newRoom, pName) => {
 
     for(let i = 0; i < rooms.length; i ++)
     {
@@ -123,22 +146,27 @@ io.on('connection', (socket) => {
       }
     }
     console.log("new room created: " + newRoom);
-    createRoom(newRoom, socket.id);
+    createRoom(newRoom, pName);
 
-    console.log("user " + socket.id + " joining: " + newRoom);
-    joinRoom(newRoom, socket.id);
+    console.log("user " + pName + " joining: " + newRoom);
+    joinRoom(newRoom, pName);
     socket.join(newRoom);
-    updateRoom(newRoom);
 
+    userJoinRoom(newRoom);
+    
+    // console.log(rooms); // to show rooms after join
   });
 
-  socket.on('join room', (room) => {
+  socket.on('join room', (room, pName) => {
 
-    console.log("user " + socket.id + " joining: " + room);      
-    joinRoom(room, socket.id);
-    socket.join(room);  
-    updateRoom(room);
-    // console.log(games);
+    if(joinRoom(room, pName))    
+    {
+      console.log("user " + pName + " joining: " + room);  
+      socket.join(room);  
+      userJoinRoom(room);
+    }   
+
+    // console.log(rooms); // to show rooms after join
   });
  
 

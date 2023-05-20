@@ -131,6 +131,7 @@ const logContainer = document.getElementById("log_container");
 // game setup
 //
 let myName = "";
+let myGameInfo = [];
 
 let playerTurn = 1; // player1/ player2
 let player1Points = 0;
@@ -154,6 +155,8 @@ btnJoinRoom.addEventListener("click", () => {
     
     toggleDisplay(onlineBtns);
     toggleDisplay(onlineJoinDiv);
+
+
 })
 
 btnCreateRoom.addEventListener("click", () => {
@@ -163,7 +166,8 @@ btnCreateRoom.addEventListener("click", () => {
     toggleDisplay(onlineRoomInfo);
 
     // make a new room with sockets
-    //
+    socket.emit('new room', myName, myName);  //(room name, userName)
+
 })
 
 onlineJoinForm.addEventListener('submit', function(e) {
@@ -172,7 +176,7 @@ onlineJoinForm.addEventListener('submit', function(e) {
     if (inputName && inputName.length == 6) {
         console.log(`join room:${inputName}`);
 
-        socket.emit('join room', inputName); // for sockets 
+        socket.emit('join room', inputName, myName); // for sockets 
         joinNameInput.value = '';
     }
     else{
@@ -189,6 +193,8 @@ roomExitButton.addEventListener("click", () => {
     toggleDisplay(onlineRoomInfo);
     toggleDisplay(onlineBtns);
 })
+
+
 logButton.addEventListener("click", () => {
     toggleDisplay(logContainer);
 })
@@ -201,7 +207,24 @@ socket.on('player name', (id) => {
     console.log(`Me: ${myName}`);    
 });
 
+socket.on('user join room', (roomInfo) => {
+    myGameInfo = roomInfo;
+    console.log(`user joined room update`);   
+    console.log(`p1:${myGameInfo.p1}`);
+    console.log(`p2:${myGameInfo.p2}`);
 
+    if(onlineRoomInfo.style.display == "none")
+    {
+        toggleDisplay(onlineJoinDiv);
+        toggleDisplay(onlineRoomInfo);
+    }
+    roomCodeText.textContent = (`room code: ${myGameInfo.room}`);
+});
+
+socket.on('update room', (roomInfo) => {
+    myGameInfo = roomInfo;
+    console.log(`room info update`);    
+});
 
 
 
