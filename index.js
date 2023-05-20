@@ -14,6 +14,7 @@ app.get('/', (req, res) => {
 
 let nameChars = ["0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f"];
 let users = [];
+let rooms = [];
 
 const findName = (searchName) => {
   return users.some(row => row.includes(searchName));
@@ -57,6 +58,46 @@ const removeUser = (userID) => {
   } 
 }
 
+
+const createRoom = (name) => {
+
+  let newGame = {
+      room:name,
+      p1:"",
+      p2:"",
+      moves:0,
+      board:["","","","","","","","","","","","","","","","","","","","","","","","",""],
+  }
+  rooms.push(newGame)
+}
+
+const joinRoom = (name, userID) => {
+  
+  for(let i = 0; i < rooms.length; i ++){
+    //check for the correct room name
+    if(rooms[i].room == name)
+    {
+      // check for if there is space in the lobby
+      if(rooms[i].p1 == '')
+      {
+        // no p1, join game
+        rooms[i].p1 = userID
+      }
+      else if(rooms[i].p2 == '')
+      {
+        // no p2, join game
+        rooms[i].p2 = userID
+      }
+      else
+      {
+        // add feature to view a game without playing here?
+        console.log(`Game: ${name} is full. User ${userID} cannot join.`)
+      }
+    }   
+  }
+}
+
+
 io.on('connection', (socket) => {
   // console.log('user connected, id: ' + socket.id);
 
@@ -70,7 +111,35 @@ io.on('connection', (socket) => {
     removeUser(socket.id);
   });
 
+  socket.on('new room', (newRoom) => {
 
+    for(let i = 0; i < rooms.length; i ++)
+    {
+      if(rooms[i].room == newRoom)
+      {
+        console.log(`room ${newRoom} already exists`)
+        // leave this func to stop new room being created
+        return;
+      }
+    }
+    console.log("new room created: " + newRoom);
+    createRoom(newRoom, socket.id);
+
+    console.log("user " + socket.id + " joining: " + newRoom);
+    joinRoom(newRoom, socket.id);
+    socket.join(newRoom);
+    updateRoom(newRoom);
+
+  });
+
+  socket.on('join room', (room) => {
+
+    console.log("user " + socket.id + " joining: " + room);      
+    joinRoom(room, socket.id);
+    socket.join(room);  
+    updateRoom(room);
+    // console.log(games);
+  });
  
 
   
