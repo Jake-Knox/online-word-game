@@ -157,7 +157,7 @@ btnJoinRoom.addEventListener("click", () => {
     toggleDisplay(onlineJoinDiv);
 
 
-})
+});
 
 btnCreateRoom.addEventListener("click", () => {
     console.log("create room click");
@@ -168,7 +168,7 @@ btnCreateRoom.addEventListener("click", () => {
     // make a new room with sockets
     socket.emit('new room', myName, myName);  //(room name, userName)
 
-})
+});
 
 onlineJoinForm.addEventListener('submit', function(e) {
     e.preventDefault();
@@ -187,17 +187,19 @@ joinExitButton.addEventListener("click", () => {
     joinNameInput.value = '';
     toggleDisplay(onlineJoinDiv);
     toggleDisplay(onlineBtns);
-})
+});
 roomExitButton.addEventListener("click", () => {
     joinNameInput.value = '';
     toggleDisplay(onlineRoomInfo);
     toggleDisplay(onlineBtns);
-})
+    
+    socket.emit('user leave room'); // send leave room signal to server to manage data
+});
 
 
 logButton.addEventListener("click", () => {
     toggleDisplay(logContainer);
-})
+});
 
 
 
@@ -225,6 +227,10 @@ socket.on('update room', (roomInfo) => {
     myGameInfo = roomInfo;
     console.log(`room info update`);    
 });
+
+socket.on('cannot join', (msg) => {
+    console.log(`${msg}`);    
+})
 
 
 

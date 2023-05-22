@@ -121,6 +121,39 @@ const updateRoom = (room) => {
   }
 }
 
+const leaveRoom = (userID) => {
+  // console.log(rooms) // check to see if empty game is removed
+  let user = "";
+  for(let i = 0; i < users.length; i++){
+    if(users[i][0] == userID){
+      user = users[i][1];
+    }
+  }
+
+  for(let i = 0; i < rooms.length; i++)
+  {
+    if(rooms[i].p1 == user)
+    {
+      rooms[i].p1 = "";
+    }
+    else if(rooms[i].p2 == user)
+    {
+      rooms[i].p2 = "";
+    }
+    
+    if(rooms[i].p1 == "" && rooms[i].p2 == "")
+    {
+      // delete from server game list
+      const index = rooms.indexOf(rooms[i]);
+      if (index > -1) {
+        rooms.splice(index, 1); // 2nd parameter means remove one item only
+      }      
+      // console.log(rooms) // check to see if empty game is removed
+    }
+  }
+}
+
+
 io.on('connection', (socket) => {
   // console.log('user connected, id: ' + socket.id);
 
@@ -132,6 +165,12 @@ io.on('connection', (socket) => {
   socket.on('disconnect', () => {
     // console.log(`user disconnected, id: ${socket.id}`);
     removeUser(socket.id);
+    leaveRoom(socket.id);
+  });
+
+  socket.on('user leave room', () => {
+    console.log(`user leaving game room, id: ${socket.id}`);
+    leaveRoom(socket.id);
   });
 
   socket.on('new room', (newRoom, pName) => {
@@ -141,6 +180,8 @@ io.on('connection', (socket) => {
       if(rooms[i].room == newRoom)
       {
         console.log(`room ${newRoom} already exists`)
+        let msg = "room already exists";
+        io.to(socket.id).emit("cannot join", msg);
         // leave this func to stop new room being created
         return;
       }
@@ -164,7 +205,11 @@ io.on('connection', (socket) => {
       console.log("user " + pName + " joining: " + room);  
       socket.join(room);  
       userJoinRoom(room);
-    }   
+    }  
+    else{
+      let msg = "room is full";
+      io.to(socket.id).emit("cannot join", msg);
+    } 
 
     // console.log(rooms); // to show rooms after join
   });
