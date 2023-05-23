@@ -111,12 +111,13 @@ const userJoinRoom = (room) => {
   }
 }
 
-const updateRoom = (room) => {
+const updateRoom = (room, wordsFound) => {
+
   for(let i = 0; i < rooms.length; i ++)
   {
     if(rooms[i].room == room)
     {
-      io.to(room).emit("update room", rooms[i]);
+      io.to(room).emit("update room", (rooms[i]), wordsFound);
     }
   }
 }
@@ -211,7 +212,21 @@ io.on('connection', (socket) => {
       io.to(socket.id).emit("cannot join", msg);
     } 
 
-    // console.log(rooms); // to show rooms after join
+    socket.on('end turn', (room, pName, index, words) => {
+      // room, player name, index of square, words make array
+      console.log(room, pName, index, words); // to show rooms after join
+
+
+      for(let i = 0; i < rooms.length; i ++)
+      {
+        if(rooms[i].room == room)
+        {
+          
+        }
+      }
+
+    });
+
   });
  
 
