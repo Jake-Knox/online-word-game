@@ -161,7 +161,7 @@ io.on('connection', (socket) => {
   let username = createName();
   io.to(socket.id).emit("player name", username);
   users.push([socket.id,username]);
-  console.log(`${users.length} users`);
+  // console.log(`${users.length} users`);
 
   socket.on('disconnect', () => {
     // console.log(`user disconnected, id: ${socket.id}`);
@@ -210,27 +210,34 @@ io.on('connection', (socket) => {
     else{
       let msg = "room is full";
       io.to(socket.id).emit("cannot join", msg);
-    } 
+    }     
+  });
 
-    socket.on('end turn', (room, pName, index, words) => {
-      // room, player name, index of square, words make array
-      console.log(room, pName, index, words); // to show rooms after join
+  socket.on('end turn', (data) => {
+    // room, player name, index of square, words make array
+    let roomName = data[0];
+    let userName = data[1];
+    let charArray = data[2];
+    let tileIndex = data[3];
+    let wordsMade = data[4];
 
+    console.log("end turn recieved");
 
-      for(let i = 0; i < rooms.length; i ++)
-      {
-        if(rooms[i].room == room)
-        {
-          
-        }
-      }
+    console.log(`1: ${roomName}`);
+    console.log(`2: ${userName}`);
+    console.log(`3: ${charArray}`);
+    console.log(`4: ${tileIndex}`);
+    console.log(`5: ${wordsMade}`);
 
-    });
+    // for(let i = 0; i < rooms.length; i ++)
+    // {
+    //   if(rooms[i].room == room)
+    //   {
+    //     console.log("");
+    //   }
+    // }
 
   });
- 
-
-  
 
 });
 

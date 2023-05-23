@@ -132,6 +132,8 @@ const logContainer = document.getElementById("log_container");
 //
 let myName = "";
 let myGameInfo = [];
+let turnWordsMade = [];
+
 
 let playerTurn = 1; // player1/ player2
 let player1Points = 0;
@@ -143,6 +145,7 @@ let lastTileUsed = null;
 const resetMove = () => {
     moveMade = false;
     lastTileUsed = null;    
+    turnWordsMade = [];
 }
 resetMove();
 
@@ -556,9 +559,26 @@ const endTurn = () => {
         lastTileUsed.classList.add("locked");        
 
 
-        resetMove();    
+        //myGameInfo.room
+        //myName        
+        //charArray
+        //lastTileUsed.id      
+        //turnWordsMade  
+        // socket.emit('end turn', (room, pName, grid, index, words));
+
+        console.log(`1: ${myGameInfo.room}`);
+        console.log(`2: ${myName}`);
+        console.log(`3: ${charArray}`);
+        console.log(`4: ${lastTileUsed.id}`);
+        console.log(`5: ${turnWordsMade}`);
+
+        let sendData = [myGameInfo.room,myName,charArray,lastTileUsed.id,turnWordsMade];
+
+
+        socket.emit('end turn', (sendData));
         
         //console.log(charArray); // see the new grid of letters
+        resetMove();    
     }  
 }
 
@@ -1640,6 +1660,7 @@ const checkString = (newChar, inputStr) => {
     }
 }
 
+
 const logWord = (word) => {
 
     // include points in html
@@ -1662,6 +1683,8 @@ const logWord = (word) => {
     }    
     newLI.innerText = (`${player} made ${word} - ${word.length} points`);
     gameLog.prepend(newLI);
+    turnWordsMade.push(word);
+
 }
 
 
