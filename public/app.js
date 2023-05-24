@@ -226,12 +226,17 @@ socket.on('user join room', (roomInfo) => {
     roomCodeText.textContent = (`room code: ${myGameInfo.room}`);
 });
 
-socket.on('update room', (roomInfo, tileIndex, wordsMade) => {
+socket.on('update room', (dataArray) => {
     
-    //roomInfo, tileIndex, wordsMade
+    //sendArry = [roomName,userName,rooms[i].moves,
+    //            charArray,tileIndex,wordsMade];
+    
+    let tileIndex = dataArray[5];
+    let wordsMade = dataArray[6];
 
-    myGameInfo = roomInfo;
-    console.log(`new room info: ${myGameInfo}`);
+
+    // myGameInfo = dataArray[2];
+    // console.log(`new room info: ${myGameInfo}`);
     console.log(`tile index used: ${tileIndex}`);
     console.log(`words made: ${wordsMade}`);
      

@@ -111,10 +111,11 @@ const userJoinRoom = (room) => {
   }
 }
 
-const updateRoom = (roomInfo, tileIndex, wordsMade) => {
+const updateRoom = (dataArray) => {
 
-  console.log(`update room: ${roomInfo.name}`);
-  io.to(roomInfo.name).emit(`update room`, (roomInfo, tileIndex, wordsMade));
+  // console.log(`after: ${dataArray}`); // check working fine
+  console.log(`sending to ${dataArray[0]}`);
+  io.to(dataArray[0]).emit(`update room`, (dataArray));
 
 }
 
@@ -231,7 +232,12 @@ io.on('connection', (socket) => {
       {
         rooms[i].moves += 1;
         rooms[i].board = charArray;
-        updateRoom(rooms[i], tileIndex, wordsMade);
+
+        let sendArry = [];
+        sendArry = [roomName,userName,rooms[i].moves,charArray,tileIndex,wordsMade];
+
+        // console.log(`before: ${sendArry}`); // check working fine
+        updateRoom(sendArry);
       }
     }
 
