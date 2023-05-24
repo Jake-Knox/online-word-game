@@ -111,15 +111,11 @@ const userJoinRoom = (room) => {
   }
 }
 
-const updateRoom = (room, wordsFound) => {
+const updateRoom = (roomInfo, tileIndex, wordsMade) => {
 
-  for(let i = 0; i < rooms.length; i ++)
-  {
-    if(rooms[i].room == room)
-    {
-      io.to(room).emit("update room", (rooms[i]), wordsFound);
-    }
-  }
+  console.log(`update room: ${roomInfo.name}`);
+  io.to(roomInfo.name).emit(`update room`, (roomInfo, tileIndex, wordsMade));
+
 }
 
 const leaveRoom = (userID) => {
@@ -229,13 +225,15 @@ io.on('connection', (socket) => {
     console.log(`4: ${tileIndex}`);
     console.log(`5: ${wordsMade}`);
 
-    // for(let i = 0; i < rooms.length; i ++)
-    // {
-    //   if(rooms[i].room == room)
-    //   {
-    //     console.log("");
-    //   }
-    // }
+    for(let i = 0; i < rooms.length; i ++)
+    {
+      if(rooms[i].room == roomName)
+      {
+        rooms[i].moves += 1;
+        rooms[i].board = charArray;
+        updateRoom(rooms[i], tileIndex, wordsMade);
+      }
+    }
 
   });
 

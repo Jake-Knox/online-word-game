@@ -226,9 +226,15 @@ socket.on('user join room', (roomInfo) => {
     roomCodeText.textContent = (`room code: ${myGameInfo.room}`);
 });
 
-socket.on('update room', (roomInfo) => {
+socket.on('update room', (roomInfo, tileIndex, wordsMade) => {
+    
+    //roomInfo, tileIndex, wordsMade
+
     myGameInfo = roomInfo;
-    console.log(`room info update`);    
+    console.log(`new room info: ${myGameInfo}`);
+    console.log(`tile index used: ${tileIndex}`);
+    console.log(`words made: ${wordsMade}`);
+     
 });
 
 socket.on('cannot join', (msg) => {
