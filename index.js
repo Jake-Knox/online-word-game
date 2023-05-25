@@ -112,6 +112,8 @@ const userJoinRoom = (room) => {
 }
 
 const updateRoom = (dataArray) => {
+  
+  //
 
   // console.log(`after: ${dataArray}`); // check working fine
   console.log(`sending to ${dataArray[0]}`);
@@ -236,6 +238,7 @@ io.on('connection', (socket) => {
         let sendArry = [];
         sendArry = [roomName,userName,rooms[i].moves,charArray,tileIndex,wordsMade];
 
+        //
         // console.log(`before: ${sendArry}`); // check working fine
         updateRoom(sendArry);
       }

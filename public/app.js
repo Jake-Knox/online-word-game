@@ -227,6 +227,11 @@ socket.on('user join room', (roomInfo) => {
 });
 
 socket.on('update room', (dataArray) => {
+
+    //
+    //  WORKING HERE
+    //
+
     
     //sendArry = [roomName,userName,rooms[i].moves,
     //            charArray,tileIndex,wordsMade];
