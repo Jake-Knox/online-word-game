@@ -89,6 +89,7 @@ const tile_E4 = document.getElementById("E4");
 const tile_E5 = document.getElementById("E5");
 tileArray.push(tile_A1, tile_A2, tile_A3, tile_A4, tile_A5, tile_B1, tile_B2, tile_B3, tile_B4, tile_B5, tile_C1, tile_C2, tile_C3, tile_C4, tile_C5, tile_D1, tile_D2, tile_D3, tile_D4, tile_D5, tile_E1, tile_E2, tile_E3, tile_E4, tile_E5);
 let charArray = ["","","","","","","","","","","","","","","","","","","","","","","","",""]
+let indexArray = ["A1","A2","A3","A4","A5","B1","B2","B3","B4","B5","C1","C2","C3","C4","C5","D1","D2","D3","D4","D5","E1","E2","E3","E4","E5"];
 
 // keyboard
 const keyboardQ = document.getElementById("keyQ");
@@ -232,17 +233,42 @@ socket.on('update room', (dataArray) => {
     //  WORKING HERE
     //
 
-    
+    // console.log(`x: ${dataArray}`);
+
+    // for(let i = 0; i < dataArray.length; i++)
+    // {
+    //     console.log(`${i}: ${dataArray[i]}`);
+    // }
+
     //sendArry = [roomName,userName,rooms[i].moves,
     //            charArray,tileIndex,wordsMade];
     
-    let tileIndex = dataArray[5];
-    let wordsMade = dataArray[6];
+    // let tileIndex = dataArray[5];
+    // let wordsMade = dataArray[6];
 
 
     // myGameInfo = dataArray[2];
     // console.log(`new room info: ${myGameInfo}`);
+    // console.log(`tile index used: ${tileIndex}`);
+    // console.log(`words made: ${wordsMade}`);
+
+    myGameInfo.moves = dataArray[2];
+    console.log(`moves: ${myGameInfo.moves}`);
+
+    for(let i =0; i< myGameInfo.board.length; i++)
+    {
+        if(myGameInfo.board[i]=="" && dataArray[3][i] != "")
+        {
+            myGameInfo.board[i] = dataArray[3][i];
+            console.log(`${dataArray[4]} -> ${myGameInfo.board[i]}`);
+        }
+    }    
+    console.log(`board: ${myGameInfo.board}`);
+
+    let tileIndex = dataArray[4];
     console.log(`tile index used: ${tileIndex}`);
+
+    let wordsMade = dataArray[5];
     console.log(`words made: ${wordsMade}`);
      
 });
@@ -582,11 +608,11 @@ const endTurn = () => {
         //turnWordsMade  
         // socket.emit('end turn', (room, pName, grid, index, words));
 
-        console.log(`1: ${myGameInfo.room}`);
-        console.log(`2: ${myName}`);
-        console.log(`3: ${charArray}`);
-        console.log(`4: ${lastTileUsed.id}`);
-        console.log(`5: ${turnWordsMade}`);
+        // console.log(`1: ${myGameInfo.room}`);
+        // console.log(`2: ${myName}`);
+        // console.log(`3: ${charArray}`);
+        // console.log(`4: ${lastTileUsed.id}`);
+        // console.log(`5: ${turnWordsMade}`);
 
         let sendData = [myGameInfo.room,myName,charArray,lastTileUsed.id,turnWordsMade];
 
