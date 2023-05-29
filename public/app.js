@@ -216,8 +216,8 @@ socket.on('player name', (id) => {
 socket.on('user join room', (roomInfo) => {
     myGameInfo = roomInfo;
     console.log(`user joined room update`);   
-    console.log(`p1:${myGameInfo.p1}`);
-    console.log(`p2:${myGameInfo.p2}`);
+    // console.log(`p1:${myGameInfo.p1}`);
+    // console.log(`p2:${myGameInfo.p2}`);
 
     if(onlineRoomInfo.style.display == "none")
     {
@@ -225,65 +225,94 @@ socket.on('user join room', (roomInfo) => {
         toggleDisplay(onlineRoomInfo);
     }
     roomCodeText.textContent = (`room code: ${myGameInfo.room}`);
+    player1Text.innerText =  (`${myGameInfo.p1}: `); 
+    player2Text.innerText =  (`${myGameInfo.p2}: `); 
+
+
 });
 
 socket.on('update room', (dataArray) => {
 
-    
+    //
     //  WORKING HERE
-    
+    console.log("update");
 
+    //      useful info
     //sendArry = [roomName,userName,rooms[i].moves,
     //            charArray,tileIndex,wordsMade];
     
-
-    // for(let i = 0; i < dataArray.length; i++)
-    // {
-    //     console.log(`${i}: ${dataArray[i]}`);
-    // }
-
-    
-    // myGameInfo = dataArray[2];
-    // console.log(`new room info: ${myGameInfo}`);
-    // console.log(`tile index used: ${tileIndex}`);
-    // console.log(`words made: ${wordsMade}`);
+    //
+    let playerName = dataArray[1];
+    // console.log(`move by: ${playerName}`);
 
     myGameInfo.moves = dataArray[2];
-    console.log(`moves: ${myGameInfo.moves}`);
+    // console.log(`moves: ${myGameInfo.moves}`);
+
+    console.log(`charArray: ${charArray}`);
+    console.log(`myGameInfo: ${myGameInfo.board}`);
+    console.log(`dataArray: ${dataArray[3]}`);
+
+
 
     for(let i =0; i< myGameInfo.board.length; i++)
     {
-        if(myGameInfo.board[i]=="" && dataArray[3][i] != "")
+        if(dataArray[3][i] != "" && myGameInfo.board[i] == "")
         {
+            console.log("here");
+
             myGameInfo.board[i] = dataArray[3][i];
+
+
             console.log(`${dataArray[4]} -> ${myGameInfo.board[i]}`);
+            
 
             // update look of board
-            if(dataArray[1] == myGameInfo.p1)
-            {
-                // player 1 move
-                console.log(`P1 move`);
+            let playerNum            
+            if(dataArray[1] == myGameInfo.p1){
+                playerNum = 1;
 
+            }else{
+                playerNum = 2;
             }
-            else{
-                // player 2 move
-                console.log(`P2 move`);
 
-            }
             tileArray[i].innerHTML= (`<p>${(myGameInfo.board[i]).toLocaleUpperCase()}</p>`);
             tileArray[i].style.backgroundColor ="#002a5c";
             tileArray[i].style.color = "white";
             tileArray[i].classList.add("locked");  
+
+            for(let i = 0; i < dataArray[5].length; i++)
+            {
+                // console.log("log time");
+                let word = dataArray[5][i];
+                logWordByPlayer(word, playerNum, playerName);
+            }
+
+
         }
     }    
+
+
+
     console.log(`board: ${myGameInfo.board}`);
-    charArray = myGameInfo.board;
+    charArray = dataArray[3];
+
+    console.log(`board 2: ${myGameInfo.board}`);
+
 
     let tileIndex = dataArray[4];
-    console.log(`tile index used: ${tileIndex}`);
+    // console.log(`tile index used: ${tileIndex}`);
 
     let wordsMade = dataArray[5];
-    console.log(`words made: ${wordsMade}`);
+    // console.log(`words made: ${wordsMade}`);
+
+
+    // reset after updating
+    if(lastTileUsed != null){
+        lastTileUsed.innerHTML = (`<p></p>`)
+        lastTileUsed.style.backgroundColor = "#b2b7bb";
+        lastTileUsed.tabIndex = 1;                    
+        resetMove();          
+    }
      
 });
 
@@ -609,18 +638,7 @@ const endTurn = () => {
             player1Text.style.border = "2px solid blue";   
             player2Text.style.border = "2px solid rgb(248, 208, 134)";     
 
-        }        
-        // lastTileUsed.style.backgroundColor ="#002a5c";
-        // lastTileUsed.style.color = "white";
-        // lastTileUsed.classList.add("locked");        
-
-
-        //myGameInfo.room
-        //myName        
-        //charArray
-        //lastTileUsed.id      
-        //turnWordsMade  
-        // socket.emit('end turn', (room, pName, grid, index, words));
+        }             
 
         // console.log(`1: ${myGameInfo.room}`);
         // console.log(`2: ${myName}`);
@@ -631,6 +649,8 @@ const endTurn = () => {
 
         let sendData = [myGameInfo.room,myName,charArray,lastTileUsed.id,turnWordsMade];
 
+        console.log(`X: ${charArray}`);
+        console.log(`Y: ${myGameInfo.board}`);
 
         socket.emit('end turn', (sendData));
         
@@ -1722,27 +1742,54 @@ const logWord = (word) => {
 
     // include points in html
 
-    let newLI = document.createElement("li");
+    // let player = "";
+    // let newLI = document.createElement("li");
 
-    let player = "";
-    if(playerTurn == 1)
-    {        
-        player = "Player 1";
-        newLI.style.color = "blue";
-        player1Points += word.length;
-        player1Text.innerText =  (`Player 1: ${player1Points}`); 
-    }
-    else{
-        player = "Player 2";
-        newLI.style.color = "red";
-        player2Points += word.length;
-        player2Text.innerText =  (`Player 2: ${player2Points}`); 
-    }    
-    newLI.innerText = (`${player} made ${word} - ${word.length} points`);
-    gameLog.prepend(newLI);
+    // let player = "";
+    // if(playerTurn == 1)
+    // {        
+    //     player = "Player 1";
+    //     newLI.style.color = "blue";
+    //     player1Points += word.length;
+    //     player1Text.innerText =  (`Player 1: ${player1Points}`); 
+    // }
+    // else{
+    //     player = "Player 2";
+    //     newLI.style.color = "red";
+    //     player2Points += word.length;
+    //     player2Text.innerText =  (`Player 2: ${player2Points}`); 
+    // }    
+    // newLI.innerText = (`${player} made ${word} - ${word.length} points`);
+    // gameLog.prepend(newLI);
     turnWordsMade.push(word);
 
 }
+
+const logWordByPlayer = (word,playerNum,name) => {
+
+    // include points in html
+
+    let newLI = document.createElement("li");
+
+    if(playerNum == 1)
+    {        
+        newLI.style.color = "blue";
+        player1Points += word.length;
+        player1Text.innerText =  (`${name}: ${player1Points}`); 
+    }
+    else{
+        newLI.style.color = "red";
+        player2Points += word.length;
+        player2Text.innerText =  (`${name}: ${player2Points}`); 
+    }    
+    newLI.innerText = (`${name} made ${word} - ${word.length} points`);
+    gameLog.prepend(newLI);
+
+    // turnWordsMade.push(word);
+
+
+}
+
 
 
 // tile checks

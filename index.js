@@ -212,6 +212,8 @@ io.on('connection', (socket) => {
     }     
   });
 
+  
+
   socket.on('end turn', (data) => {
     // room, player name, index of square, words make array
     let roomName = data[0];
