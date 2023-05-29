@@ -229,24 +229,20 @@ socket.on('user join room', (roomInfo) => {
 
 socket.on('update room', (dataArray) => {
 
-    //
+    
     //  WORKING HERE
-    //
+    
 
-    // console.log(`x: ${dataArray}`);
+    //sendArry = [roomName,userName,rooms[i].moves,
+    //            charArray,tileIndex,wordsMade];
+    
 
     // for(let i = 0; i < dataArray.length; i++)
     // {
     //     console.log(`${i}: ${dataArray[i]}`);
     // }
 
-    //sendArry = [roomName,userName,rooms[i].moves,
-    //            charArray,tileIndex,wordsMade];
     
-    // let tileIndex = dataArray[5];
-    // let wordsMade = dataArray[6];
-
-
     // myGameInfo = dataArray[2];
     // console.log(`new room info: ${myGameInfo}`);
     // console.log(`tile index used: ${tileIndex}`);
@@ -261,9 +257,27 @@ socket.on('update room', (dataArray) => {
         {
             myGameInfo.board[i] = dataArray[3][i];
             console.log(`${dataArray[4]} -> ${myGameInfo.board[i]}`);
+
+            // update look of board
+            if(dataArray[1] == myGameInfo.p1)
+            {
+                // player 1 move
+                console.log(`P1 move`);
+
+            }
+            else{
+                // player 2 move
+                console.log(`P2 move`);
+
+            }
+            tileArray[i].innerHTML= (`<p>${(myGameInfo.board[i]).toLocaleUpperCase()}</p>`);
+            tileArray[i].style.backgroundColor ="#002a5c";
+            tileArray[i].style.color = "white";
+            tileArray[i].classList.add("locked");  
         }
     }    
     console.log(`board: ${myGameInfo.board}`);
+    charArray = myGameInfo.board;
 
     let tileIndex = dataArray[4];
     console.log(`tile index used: ${tileIndex}`);
@@ -596,9 +610,9 @@ const endTurn = () => {
             player2Text.style.border = "2px solid rgb(248, 208, 134)";     
 
         }        
-        lastTileUsed.style.backgroundColor ="#002a5c";
-        lastTileUsed.style.color = "white";
-        lastTileUsed.classList.add("locked");        
+        // lastTileUsed.style.backgroundColor ="#002a5c";
+        // lastTileUsed.style.color = "white";
+        // lastTileUsed.classList.add("locked");        
 
 
         //myGameInfo.room
@@ -613,6 +627,7 @@ const endTurn = () => {
         // console.log(`3: ${charArray}`);
         // console.log(`4: ${lastTileUsed.id}`);
         // console.log(`5: ${turnWordsMade}`);
+        // console.log(`letter: ${lastTileUsed.textContent}`);
 
         let sendData = [myGameInfo.room,myName,charArray,lastTileUsed.id,turnWordsMade];
 
