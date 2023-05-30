@@ -58,6 +58,9 @@ const roomCodeText = document.getElementById("room-code-text");
 
 const logButton = document.getElementById("log-button");
 
+const waitingScreen = document.getElementById("waiting-screen");
+const waitingText = document.getElementById("waiting-text");
+
 //
 // Tile array setup
 //
@@ -143,9 +146,9 @@ let player2Points = 0;
 let moveMade = true;
 let lastTileUsed = null;
 
-const resetMove = () => {
+const resetMove = () => {    
     moveMade = false;
-    lastTileUsed = null;    
+    lastTileUsed = null;   
     turnWordsMade = [];
 }
 resetMove();
@@ -196,7 +199,13 @@ roomExitButton.addEventListener("click", () => {
     joinNameInput.value = '';
     toggleDisplay(onlineRoomInfo);
     toggleDisplay(onlineBtns);
-    
+
+    waitingScreen.style.visibility = "visisble";
+    waitingText.innerHTML = ("<b>Create or Join</b>");
+
+    resetGameBoard();
+    resetMove();    
+    myGameInfo = [];
     socket.emit('user leave room'); // send leave room signal to server to manage data
 });
 
@@ -228,37 +237,44 @@ socket.on('user join room', (roomInfo) => {
     player1Text.innerText =  (`${myGameInfo.p1}: `); 
     player2Text.innerText =  (`${myGameInfo.p2}: `); 
 
+    if(myGameInfo.p1 == "" || myGameInfo.p2 == "")
+    {
+        //one user missing
+        waitingScreen.style.visibility = "visisble";
+        waitingText.innerHTML = ("<b>waiting for opponent</b>");
+    }
+    else{
+        waitingScreen.style.visibility = "hidden";
+        waitingText.innerHTML = ("<b>opponent turn</b>");
+    }
 
 });
 
 socket.on('update room', (dataArray) => {
 
-    //
     //  WORKING HERE
-    console.log("update");
+    console.log("update room");
 
-    //      useful info
+    // console.log(`move by: ${playerName}`);
+    // console.log(`moves: ${myGameInfo.moves}`);
+    // console.log(`charArray: ${charArray}`);
+    // console.log(`myGameInfo: ${myGameInfo.board}`);
+    // console.log(`dataArray: ${dataArray[3]}`);
+
+    // useful info
     //sendArry = [roomName,userName,rooms[i].moves,
     //            charArray,tileIndex,wordsMade];
     
-    //
+    
     let playerName = dataArray[1];
-    // console.log(`move by: ${playerName}`);
-
     myGameInfo.moves = dataArray[2];
-    // console.log(`moves: ${myGameInfo.moves}`);
-
-    console.log(`charArray: ${charArray}`);
-    console.log(`myGameInfo: ${myGameInfo.board}`);
-    console.log(`dataArray: ${dataArray[3]}`);
-
-
+    
 
     for(let i =0; i< myGameInfo.board.length; i++)
     {
         if(dataArray[3][i] != "" && myGameInfo.board[i] == "")
         {
-            console.log("here");
+            // console.log("here");
 
             myGameInfo.board[i] = dataArray[3][i];
 
@@ -291,12 +307,10 @@ socket.on('update room', (dataArray) => {
         }
     }    
 
-
-
-    console.log(`board: ${myGameInfo.board}`);
+    // console.log(`board: ${myGameInfo.board}`);
     charArray = dataArray[3];
 
-    console.log(`board 2: ${myGameInfo.board}`);
+    // console.log(`board 2: ${myGameInfo.board}`);
 
 
     let tileIndex = dataArray[4];
@@ -310,6 +324,7 @@ socket.on('update room', (dataArray) => {
     if(lastTileUsed != null){
         lastTileUsed.innerHTML = (`<p></p>`)
         lastTileUsed.style.backgroundColor = "#b2b7bb";
+        tileArray[i].style.color = "white";
         lastTileUsed.tabIndex = 1;                    
         resetMove();          
     }
@@ -321,6 +336,19 @@ socket.on('cannot join', (msg) => {
 })
 
 
+const resetGameBoard = () => {
+    for(let i = 0; i < tileArray.length; i++)
+    {
+        tileArray[i].innerHTML = (`<p></p>`);
+        tileArray[i].style.backgroundColor = "#b2b7bb";
+        tileArray[i].style.color = "black";
+        charArray[i] = "";  
+        if(tileArray[i].classList.contains("locked")){
+            tileArray[i].classList.remove("locked");
+        }
+    }
+    
+}
 
 //
 // game code
@@ -427,7 +455,7 @@ keyboardEnter.addEventListener("click", () => {
 keyboardBackspace.addEventListener("click", () => {
     // code same as backspace key press
     if(lastTileUsed != null){
-        lastTileUsed.innerHTML = (`<p></p>`)
+        lastTileUsed.innerHTML = (`<p></p>`);
         lastTileUsed.style.backgroundColor = "#b2b7bb";
         lastTileUsed.tabIndex = 1;                    
         resetMove();          
@@ -648,9 +676,6 @@ const endTurn = () => {
         // console.log(`letter: ${lastTileUsed.textContent}`);
 
         let sendData = [myGameInfo.room,myName,charArray,lastTileUsed.id,turnWordsMade];
-
-        console.log(`X: ${charArray}`);
-        console.log(`Y: ${myGameInfo.board}`);
 
         socket.emit('end turn', (sendData));
         
