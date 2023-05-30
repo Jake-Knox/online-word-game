@@ -163,6 +163,41 @@ body{
     margin-left: 3vh;
 }
 
+
+#waiting-screen{
+    position: absolute;
+    
+    width: 370px;
+    height: 370px;
+    background-color: gray;
+    border: 2px solid gray;
+    border-radius: 5px;
+    opacity: 0.5;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#waiting-text{
+    font-size: 2em;
+}
+
+#waiting-img{
+    height: 50%;
+    width: 50%;
+    animation-name: example;
+    animation-duration: 10s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+@keyframes example {
+    from {transform: rotate(0.0turn);}
+    to {transform: rotate(1.0turn);}
+  }
+
+
 #container_5x5{
 
     width: 370px;
@@ -389,8 +424,13 @@ p{
     border: 1px solid #b2b7bb;
     border-radius: 5px;
 
-    font-size:small;    
+    font-size: 0.4em;    
     user-select: none;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 #footer{
