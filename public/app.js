@@ -167,6 +167,20 @@ const toggleMyTurn = () => {
         waitingScreen.style.visibility = "hidden";
     }
 
+    if(playerTurn == 1)
+        {
+            playerTurn = 2;
+            player2Text.style.color = "red";      
+            player2Text.style.border = "2px solid red";   
+            player1Text.style.border = "2px solid rgb(248, 208, 134)";  
+        }
+        else{
+            playerTurn = 1;
+            player1Text.style.color = "blue";                     
+            player1Text.style.border = "2px solid blue";   
+            player2Text.style.border = "2px solid rgb(248, 208, 134)";     
+        } 
+
     console.log(`my turn = ${myTurn}`);
 }
 
@@ -264,7 +278,8 @@ socket.on('user join room', (roomInfo) => {
     }
     else if(myGameInfo.moves % 2 == 0)
     {
-        // p1 turn        
+        // p1 turn   
+        playerTurn = 1;     
         if(myName == myGameInfo.p1)
         {
             myTurn =true;
@@ -279,6 +294,7 @@ socket.on('user join room', (roomInfo) => {
     }
     else if(myGameInfo.moves % 2 == 1)
     {
+        playerTurn = 2;
         // p2 turn        
         if(myName == myGameInfo.p2)
         {
@@ -703,29 +719,7 @@ const endTurn = () => {
                 // nothing
                 console.log("tile not supported yet or ERROR")
         }
-
-        if(playerTurn == 1)
-        {
-            playerTurn = 2;
-            player2Text.style.color = "red";      
-            player2Text.style.border = "2px solid red";   
-            player1Text.style.border = "2px solid rgb(248, 208, 134)";  
-        }
-        else{
-            playerTurn = 1;
-            player1Text.style.color = "blue";                     
-            player1Text.style.border = "2px solid blue";   
-            player2Text.style.border = "2px solid rgb(248, 208, 134)";     
-
-        }             
-
-        // console.log(`1: ${myGameInfo.room}`);
-        // console.log(`2: ${myName}`);
-        // console.log(`3: ${charArray}`);
-        // console.log(`4: ${lastTileUsed.id}`);
-        // console.log(`5: ${turnWordsMade}`);
-        // console.log(`letter: ${lastTileUsed.textContent}`);
-
+         
         let sendData = [myGameInfo.room,myName,charArray,lastTileUsed.id,turnWordsMade];
 
         socket.emit('end turn', (sendData));
