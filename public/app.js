@@ -138,8 +138,11 @@ let myName = "";
 let myGameInfo = [];
 let turnWordsMade = [];
 
-
+// p1=1 - p2=2
 let playerTurn = 1; // player1/ player2
+// now using myTurn
+let myTurn = true;
+
 let player1Points = 0;
 let player2Points = 0;
 
@@ -152,6 +155,20 @@ const resetMove = () => {
     turnWordsMade = [];
 }
 resetMove();
+
+const toggleMyTurn = () => {
+    if(myTurn){
+        myTurn = false;
+        waitingScreen.style.visibility = "visible";
+        waitingText.innerHTML = ("<b>opponent turn</b>");
+    }
+    else{
+        myTurn = true
+        waitingScreen.style.visibility = "hidden";
+    }
+
+    console.log(`my turn = ${myTurn}`);
+}
 
 //
 // functions + listeners
@@ -194,6 +211,8 @@ joinExitButton.addEventListener("click", () => {
     joinNameInput.value = '';
     toggleDisplay(onlineJoinDiv);
     toggleDisplay(onlineBtns);
+    waitingScreen.style.visibility = "visisble";
+    waitingText.innerHTML = ("<b>Create or Join</b>");
 });
 roomExitButton.addEventListener("click", () => {
     joinNameInput.value = '';
@@ -225,8 +244,6 @@ socket.on('player name', (id) => {
 socket.on('user join room', (roomInfo) => {
     myGameInfo = roomInfo;
     console.log(`user joined room update`);   
-    // console.log(`p1:${myGameInfo.p1}`);
-    // console.log(`p2:${myGameInfo.p2}`);
 
     if(onlineRoomInfo.style.display == "none")
     {
@@ -237,16 +254,46 @@ socket.on('user join room', (roomInfo) => {
     player1Text.innerText =  (`${myGameInfo.p1}: `); 
     player2Text.innerText =  (`${myGameInfo.p2}: `); 
 
+    console.log(`checking room`);
     if(myGameInfo.p1 == "" || myGameInfo.p2 == "")
     {
         //one user missing
         waitingScreen.style.visibility = "visisble";
         waitingText.innerHTML = ("<b>waiting for opponent</b>");
+        console.log("show waiting screen");
     }
-    else{
-        waitingScreen.style.visibility = "hidden";
-        waitingText.innerHTML = ("<b>opponent turn</b>");
+    else if(myGameInfo.moves % 2 == 0)
+    {
+        // p1 turn        
+        if(myName == myGameInfo.p1)
+        {
+            myTurn =true;
+            waitingScreen.style.visibility = "hidden";
+        }
+        else if(myName == myGameInfo.p2)
+        {
+            myTurn =false;
+            waitingScreen.style.visibility = "visible";
+            waitingText.innerHTML = ("<b>opponent turn</b>");
+        }
     }
+    else if(myGameInfo.moves % 2 == 1)
+    {
+        // p2 turn        
+        if(myName == myGameInfo.p2)
+        {
+            myTurn =true;
+            waitingScreen.style.visibility = "hidden";
+        }
+        else if(myName == myGameInfo.p1)
+        {
+            myTurn =false;
+            waitingScreen.style.visibility = "visible";
+            waitingText.innerHTML = ("<b>opponent turn</b>");
+        }
+    }
+    console.log(`my turn = ${myTurn}`);
+
 
 });
 
@@ -312,7 +359,6 @@ socket.on('update room', (dataArray) => {
 
     // console.log(`board 2: ${myGameInfo.board}`);
 
-
     let tileIndex = dataArray[4];
     // console.log(`tile index used: ${tileIndex}`);
 
@@ -328,11 +374,16 @@ socket.on('update room', (dataArray) => {
         lastTileUsed.tabIndex = 1;                    
         resetMove();          
     }
+
+    toggleMyTurn();
      
 });
 
 socket.on('cannot join', (msg) => {
     console.log(`${msg}`);    
+    waitingScreen.style.visibility = "visisble";
+    waitingText.innerHTML = ("<b>waiting for opponent</b>");
+    console.log("show waiting screen");
 })
 
 
