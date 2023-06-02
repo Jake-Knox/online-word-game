@@ -131,6 +131,11 @@ const keyboardEnter = document.getElementById("keyboard_enter")
 const gameLog = document.getElementById("game_log");
 const logContainer = document.getElementById("log_container");
 
+const endGameScreen = document.getElementById("endgame-screen");
+const playerWinsText = document.getElementById("player-wins");
+const p1FinalPointsTxt = document.getElementById("p1-final-points");
+const p2FinalPointsTxt = document.getElementById("p2-final-points");
+
 //
 // game setup
 //
@@ -148,6 +153,8 @@ let player2Points = 0;
 
 let moveMade = true;
 let lastTileUsed = null;
+
+endGameScreen.style.visibility = ("hidden");
 
 const resetMove = () => {    
     moveMade = false;
@@ -227,6 +234,8 @@ joinExitButton.addEventListener("click", () => {
     toggleDisplay(onlineBtns);
     waitingScreen.style.visibility = "visisble";
     waitingText.innerHTML = ("<b>Create or Join</b>");
+    endGameScreen.style.visibility = ("hidden");
+
 });
 roomExitButton.addEventListener("click", () => {
     joinNameInput.value = '';
@@ -235,6 +244,8 @@ roomExitButton.addEventListener("click", () => {
 
     waitingScreen.style.visibility = "visisble";
     waitingText.innerHTML = ("<b>Create or Join</b>");
+
+    endGameScreen.style.visibility = ("hidden");
 
     resetGameBoard();
     resetMove();    
@@ -255,6 +266,8 @@ socket.on('player name', (id) => {
     console.log(`Me: ${myName}`);    
 });
 
+
+// join
 socket.on('user join room', (roomInfo) => {
     myGameInfo = roomInfo;
     console.log(`user joined room update`);   
@@ -310,7 +323,7 @@ socket.on('user join room', (roomInfo) => {
     }
     console.log(`my turn = ${myTurn}`);
 
-
+    endGameCheck();
 });
 
 socket.on('update room', (dataArray) => {
@@ -392,6 +405,8 @@ socket.on('update room', (dataArray) => {
     }
 
     toggleMyTurn();
+
+    endGameCheck();
      
 });
 
@@ -420,6 +435,43 @@ const resetGameBoard = () => {
 //
 // game code
 //
+
+const endGameCheck = () => { 
+    if(myGameInfo.moves >= 25){
+        console.log("game over");
+        endGame();
+    }
+}
+
+const endGame = () => {
+
+    //
+    endGameScreen.style.visibility = ("visible");
+
+    //
+    if(player1Points == player2Points){
+        // draw
+        playerWinsText.innerText = ("MATCH DRAW!");
+        playerWinsText.style.backgroundColor = ("lightseagreen");
+    }
+    else if(player1Points > player2Points) {
+        // p1 win
+        playerWinsText.innerText = (`${myGameInfo.p1} WINS!`);
+        endGameScreen.style.backgroundColor = ("blue");
+
+    }
+    else {
+        // p2 win
+        playerWinsText.innerText = (`${myGameInfo.p2} WINS!`);
+        endGameScreen.style.backgroundColor = ("red");
+
+    }
+    p1FinalPointsTxt.innerText = (`${myGameInfo.p1}: ${player1Points}`);
+    p2FinalPointsTxt.innerText = (`${myGameInfo.p2}: ${player2Points}`);
+
+}
+
+
 
 // setting up button click on each tile
 for(let i = 0; i < tileArray.length; i++){   

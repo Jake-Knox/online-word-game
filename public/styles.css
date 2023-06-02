@@ -72,7 +72,7 @@ body{
     margin-top: 0px;
     width:100%;
     height: 5vh; /* was 50px */
-    margin-bottom: 20px;
+    margin-bottom: 2.5vh;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
@@ -105,7 +105,7 @@ body{
     margin-top: 0px;
     width:100%;
     height: 5vh; /* was 50px */
-    margin-bottom: 20px;
+    margin-bottom: 2.5vh;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
@@ -125,7 +125,7 @@ body{
     margin-top: 0px;
     width:100%;
     height: 5vh; /* was 50px */
-    margin-bottom: 20px;
+    margin-bottom: 2.5vh;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
@@ -195,16 +195,21 @@ body{
     position: absolute;    
     top: 20vh;
 
-    width: 380px;
-    height: 380px;
-    background-color: lightgreen;
-    border: 1px solid lightgreen;
-    border-radius: 5px;
+    width: 375px;
+    height: 375px;
+    background-color: lightseagreen;
+    border: 3px solid black;
+    border-radius: 15px;
        
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.endgame-text{
+    color: white;
+    font-size: 2.3em;
 }
 
 
@@ -247,8 +252,6 @@ body{
 
 .box_5x5:focus {
     outline: none;
-    /* text-align: center; */
-
 }
 
 .locked{
@@ -273,7 +276,8 @@ p{
     align-items: center;
 
     /* line-height: 3vh; */
-    margin-bottom: 0vh;
+    margin-top: 1vh;
+    margin-bottom: 1vh;
     /* border: 2px solid green; */
 
 }
@@ -281,20 +285,13 @@ p{
 #player_1_text{
     text-align: center;
     width: 50%;
-    /* height: 100%; */
-
-    
-
     color: blue;
     border: 2px solid blue;
-    /* border: 2px solid rgb(248, 208, 134); */
 }
+
 #player_2_text{
     text-align: center;
     width: 50%;
-
-    
-
     color: red;
     border: 2px solid rgb(248, 208, 134);
 }
@@ -373,13 +370,11 @@ p{
 }
 
 .keyboard_key:active{
-
     background-color: lightgray;
-  
 }
 
 #keyboard_buttons_container{
-    margin-top: 10px;
+    margin-top: 1.5vh;
     width:100%;
     height: 50px;
     display: flex;
@@ -397,12 +392,9 @@ p{
     width: 30%;
     height: 100%;
     padding: 1px;
-    
     margin: 1px;
     border-radius: 5px;
-
     line-height: 300%;
-
 }
 #keyboard_backspace{    
     background-color: palevioletred;
@@ -412,16 +404,12 @@ p{
 }
 
 
-
-
-
 #log_container{
     width: 100%;
     height: 30vh;
     background-color: #b2b7bb;
     overflow: scroll;
 }
-
 
 #log-button{
     position: fixed;
