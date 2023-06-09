@@ -83,7 +83,7 @@ body{
     -ms-user-select: none; /* IE 10 and IE 11 */
     user-select: none; /* Standard syntax */
 
-    border: 1px solid lightseagreen;
+    /* border: 1px solid lightseagreen; */
 }
 
 .join-create-button{
@@ -100,7 +100,9 @@ body{
     background-color: lightseagreen;
 
 }
-
+.join-create-button:hover {
+    background-color: rgb(27, 156, 150);
+}
 /* 2 */
 #online-join{
 
@@ -112,8 +114,8 @@ body{
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
-
-    border: 1px solid lightseagreen;
+    font-size: larger;
+    /* border: 1px solid lightseagreen; */
 }
 #online-join-form{
     height: 100%;
@@ -135,14 +137,13 @@ body{
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
-
-    border: 1px solid lightseagreen;
+    /* border: 1px solid lightseagreen; */
 }
 
 #join-name{
     height: 3vh;
     font-size: larger;
-    width: 25%;
+    width: 35%;
 }
 
 .btn-form{
@@ -156,6 +157,9 @@ body{
     color: black;
     border: none;
     border-radius: 5px;
+}
+.btn-form:hover {
+    background-color: rgb(27, 156, 150);
 }
 
 #room-code-text{
@@ -411,8 +415,14 @@ p{
 #keyboard_backspace{    
     background-color: palevioletred;
 }
+#keyboard_backspace:hover{    
+    background-color: rgb(185, 94, 124);
+}
 #keyboard_enter{    
     background-color: palegreen;
+}
+#keyboard_enter:hover{    
+    background-color: rgb(127, 223, 127);
 }
 
 
@@ -441,6 +451,9 @@ p{
     flex-direction: column;
     align-items: center;
     justify-content: center;
+}
+#log-button:hover{
+    background-color: #9fa3a7;
 }
 
 #footer{
