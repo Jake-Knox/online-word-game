@@ -70,6 +70,8 @@ const createRoom = (name) => {
       board:["","","","","","","","","","","","","","","","","","","","","","","","",""],
   }
   rooms.push(newGame)
+  // final testing
+  console.log(`${rooms.length} current rooms`);  
 }
 
 const joinRoom = (name, pName) => {
@@ -99,6 +101,8 @@ const joinRoom = (name, pName) => {
       }
     }   
   }
+  // final testing
+  console.log(`${rooms.length} current rooms`);  
 }
 
 const userJoinRoom = (room) => {
@@ -151,6 +155,9 @@ const leaveRoom = (userID) => {
       // console.log(rooms) // check to see if empty game is removed
     }
   }
+  // final testing
+  console.log(`${rooms.length} current rooms`);  
+  console.log(rooms);
 }
 
 
@@ -224,11 +231,11 @@ io.on('connection', (socket) => {
 
     console.log("end turn recieved");
 
-    console.log(`1: ${roomName}`);
-    console.log(`2: ${userName}`);
-    console.log(`3: ${charArray}`);
-    console.log(`4: ${tileIndex}`);
-    console.log(`5: ${wordsMade}`);
+    console.log(`1: ${roomName}, 2: ${userName}, 3: ${charArray}, 4: ${tileIndex}, 5: ${wordsMade}`);
+    // console.log(``);
+    // console.log(``);
+    // console.log(``);
+    // console.log(``);
 
     for(let i = 0; i < rooms.length; i ++)
     {

@@ -244,12 +244,12 @@ roomExitButton.addEventListener("click", () => {
 
     waitingScreen.style.visibility = "visisble";
     waitingText.innerHTML = ("<b>Create or Join</b>");
-
     endGameScreen.style.visibility = ("hidden");
 
     resetGameBoard();
     resetMove();    
     myGameInfo = [];
+
     socket.emit('user leave room'); // send leave room signal to server to manage data
 });
 
