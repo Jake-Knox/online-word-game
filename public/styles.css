@@ -141,9 +141,14 @@ body{
 }
 
 #join-name{
-    height: 3vh;
+    height: 5vh;
     font-size: larger;
     width: 35%;
+    text-align: center;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
 }
 
 .btn-form{
