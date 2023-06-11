@@ -242,13 +242,16 @@ roomExitButton.addEventListener("click", () => {
     toggleDisplay(onlineRoomInfo);
     toggleDisplay(onlineBtns);
 
-    waitingScreen.style.visibility = "visisble";
-    waitingText.innerHTML = ("<b>Create or Join</b>");
-    endGameScreen.style.visibility = ("hidden");
+    
 
     resetGameBoard();
     resetMove();    
     myGameInfo = [];
+
+    myTurn = false;
+    waitingScreen.style.visibility = "visisble";
+    waitingText.innerHTML = ("<b>Create or Join</b>");
+    endGameScreen.style.visibility = ("hidden");
 
     socket.emit('user leave room'); // send leave room signal to server to manage data
 });
@@ -269,8 +272,10 @@ socket.on('player name', (id) => {
 
 // join
 socket.on('user join room', (roomInfo) => {
+
     myGameInfo = roomInfo;
-    console.log(`user joined room update`);   
+    console.log(`user joined room update`); 
+    console.log(myGameInfo.board);
 
     if(onlineRoomInfo.style.display == "none")
     {
@@ -281,7 +286,7 @@ socket.on('user join room', (roomInfo) => {
     player1Text.innerText =  (`${myGameInfo.p1}: `); 
     player2Text.innerText =  (`${myGameInfo.p2}: `); 
 
-    console.log(`checking room`);
+    console.log(`checking for missing users and turns`);
     if(myGameInfo.p1 == "" || myGameInfo.p2 == "")
     {
         //one user missing
@@ -321,7 +326,20 @@ socket.on('user join room', (roomInfo) => {
             waitingText.innerHTML = ("<b>opponent turn</b>");
         }
     }
-    console.log(`my turn = ${myTurn}`);
+    // console.log(`my turn = ${myTurn}`);
+
+    console.log(`top left = ${myGameInfo.board[0]}`);
+    console.log(`length = ${tileArray.length}`);
+
+    // small issues with reconnecting users
+    for(let i = 0; i < tileArray.length; i++){
+        if(myGameInfo.board[i] != ''){
+            tileArray[i].innerHTML= (`<p>${(myGameInfo.board[i]).toLocaleUpperCase()}</p>`);
+            tileArray[i].style.backgroundColor ="#002a5c";
+            tileArray[i].style.color = "white";
+            tileArray[i].classList.add("locked"); 
+        }
+    }
 
     endGameCheck();
 });

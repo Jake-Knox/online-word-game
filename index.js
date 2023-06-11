@@ -182,6 +182,8 @@ io.on('connection', (socket) => {
 
   socket.on('new room', (newRoom, pName) => {
 
+    let roomExists = false;
+
     for(let i = 0; i < rooms.length; i ++)
     {
       if(rooms[i].room == newRoom)
@@ -190,18 +192,28 @@ io.on('connection', (socket) => {
         let msg = "room already exists";
         io.to(socket.id).emit("cannot join", msg);
         // leave this func to stop new room being created
-        return;
+        roomExists = true;
       }
     }
-    console.log("new room created: " + newRoom);
-    createRoom(newRoom, pName);
-
-    console.log("user " + pName + " joining: " + newRoom);
-    joinRoom(newRoom, pName);
-    socket.join(newRoom);
-
-    userJoinRoom(newRoom);
-    
+    if( !roomExists)
+    {
+      console.log("new room created: " + newRoom);
+      createRoom(newRoom, pName);
+  
+      console.log("user " + pName + " joining: " + newRoom);
+      joinRoom(newRoom, pName);
+      socket.join(newRoom);
+  
+      userJoinRoom(newRoom);
+    }
+    else{
+      console.log("user " + pName + " joining: " + newRoom);
+      if(joinRoom(newRoom, pName))
+      {
+        socket.join(newRoom);  
+        userJoinRoom(newRoom);
+      }      
+    }
     // console.log(rooms); // to show rooms after join
   });
 
@@ -214,7 +226,7 @@ io.on('connection', (socket) => {
       userJoinRoom(room);
     }  
     else{
-      let msg = "room is full";
+      let msg = "room is full or does not exist";
       io.to(socket.id).emit("cannot join", msg);
     }     
   });
