@@ -189,6 +189,22 @@ body{
     justify-content: center;
     align-items: center;
 }
+#endgame-screen{
+
+    position: absolute;    
+    top: 18vh;
+
+    width: 375px;
+    height: 375px;
+    background-color: lightseagreen;
+    border: 3px solid black;
+    border-radius: 15px;
+       
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 
 #waiting-text{
 
@@ -209,24 +225,6 @@ body{
     from {transform: rotate(0.0turn);}
     to {transform: rotate(1.0turn);}
   }
-
-
-#endgame-screen{
-
-    position: absolute;    
-    top: 20vh;
-
-    width: 375px;
-    height: 375px;
-    background-color: lightseagreen;
-    border: 3px solid black;
-    border-radius: 15px;
-       
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
 
 .endgame-text{
     color: white;

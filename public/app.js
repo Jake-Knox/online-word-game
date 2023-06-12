@@ -156,6 +156,8 @@ let lastTileUsed = null;
 
 endGameScreen.style.visibility = ("hidden");
 
+
+
 const resetMove = () => {    
     moveMade = false;
     lastTileUsed = null;   
@@ -232,7 +234,8 @@ joinExitButton.addEventListener("click", () => {
     joinNameInput.value = '';
     toggleDisplay(onlineJoinDiv);
     toggleDisplay(onlineBtns);
-    waitingScreen.style.visibility = "visisble";
+
+    waitingScreen.style.visibility = ("visible");
     waitingText.innerHTML = ("<b>Create or Join</b>");
     endGameScreen.style.visibility = ("hidden");
 
@@ -243,15 +246,17 @@ roomExitButton.addEventListener("click", () => {
     toggleDisplay(onlineBtns);
 
     
-
+    resetLog();
     resetGameBoard();
     resetMove();    
     myGameInfo = [];
-
     myTurn = false;
-    waitingScreen.style.visibility = "visisble";
+
+    waitingScreen.style.visibility = ("visible");
     waitingText.innerHTML = ("<b>Create or Join</b>");
     endGameScreen.style.visibility = ("hidden");
+
+    // console.log(`waiting visibility = ${waitingScreen.style.visibility}`)
 
     socket.emit('user leave room'); // send leave room signal to server to manage data
 });
@@ -448,6 +453,10 @@ const resetGameBoard = () => {
         }
     }
     
+}
+
+const resetLog = () => {
+    gameLog.innerHTML = ("");
 }
 
 //
