@@ -136,6 +136,9 @@ const playerWinsText = document.getElementById("player-wins");
 const p1FinalPointsTxt = document.getElementById("p1-final-points");
 const p2FinalPointsTxt = document.getElementById("p2-final-points");
 
+const errorLog = document.getElementById("error-log");
+const errorText = document.getElementById("error-text");
+
 //
 // game setup
 //
@@ -156,6 +159,8 @@ let lastTileUsed = null;
 
 endGameScreen.style.visibility = ("hidden");
 
+// errorLog.style.visibility = ("hidden");
+errorLog.style.visibility = ("visible");
 
 
 const resetMove = () => {    

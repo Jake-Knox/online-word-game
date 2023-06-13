@@ -172,6 +172,30 @@ body{
     margin-left: 3vh;
 }
 
+#error-log{
+    position: absolute;
+    
+    top: 10vh;
+    width: 370px;
+    height: 7vh;
+    
+    background-color: #9fa3a7;
+    opacity: 0.9;
+    border-radius: 10px;
+    
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+#error-text{
+    padding: 1vw;
+    opacity: 1;
+    font-size: large;
+    color: crimson;
+    font-weight: 1000;
+    
+}
 
 #waiting-screen{
 
