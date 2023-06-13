@@ -159,9 +159,7 @@ let lastTileUsed = null;
 
 endGameScreen.style.visibility = ("hidden");
 
-// errorLog.style.visibility = ("hidden");
-errorLog.style.visibility = ("visible");
-
+errorLog.style.visibility = ("hidden");
 
 const resetMove = () => {    
     moveMade = false;
@@ -198,8 +196,23 @@ const toggleMyTurn = () => {
     console.log(`my turn = ${myTurn}`);
 }
 
+const showError = (msg) => {
+    // show error message 'msg' on screen for set amount of time
+    let timer = 5000 //5 seconds
+
+    errorLog.style.visibility = ("visible");
+    errorText.textContent = (`${msg}`);
+
+    console.log("call to func showError")
+    setTimeout(() => {
+        console.log("hide error screen")
+        errorLog.style.visibility = ("hidden");
+        errorText.textContent = ("No Current Error");
+    }, timer);
+}
+
 //
-// functions + listeners
+// listeners + functions
 //
 
 btnJoinRoom.addEventListener("click", () => {
