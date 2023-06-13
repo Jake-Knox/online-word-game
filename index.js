@@ -75,7 +75,7 @@ const createRoom = (name) => {
 }
 
 const joinRoom = (name, pName) => {
-  
+
   for(let i = 0; i < rooms.length; i ++){
     //check for the correct room name
     if(rooms[i].room == name)
@@ -226,7 +226,7 @@ io.on('connection', (socket) => {
       userJoinRoom(room);
     }  
     else{
-      let msg = "room is full or does not exist";
+      let msg = "Room is full or does not exist. Check spelling of room code.";
       io.to(socket.id).emit("cannot join", msg);
     }     
   });

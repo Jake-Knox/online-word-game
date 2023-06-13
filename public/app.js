@@ -158,8 +158,9 @@ let moveMade = true;
 let lastTileUsed = null;
 
 endGameScreen.style.visibility = ("hidden");
-
 errorLog.style.visibility = ("hidden");
+
+// console.log(("TEST123").toLocaleLowerCase());
 
 const resetMove = () => {    
     moveMade = false;
@@ -203,9 +204,9 @@ const showError = (msg) => {
     errorLog.style.visibility = ("visible");
     errorText.textContent = (`${msg}`);
 
-    console.log("call to func showError")
+    console.log("call to showError")
     setTimeout(() => {
-        console.log("hide error screen")
+        // console.log("hide error screen")
         errorLog.style.visibility = ("hidden");
         errorText.textContent = ("No Current Error");
     }, timer);
@@ -241,7 +242,10 @@ onlineJoinForm.addEventListener('submit', function(e) {
     if (inputName && inputName.length == 6) {
         console.log(`join room:${inputName}`);
 
-        socket.emit('join room', inputName, myName); // for sockets 
+        let nameL = (inputName).toLocaleLowerCase();
+        // console.log(`lower = ${nameL}`)
+
+        socket.emit('join room', nameL, myName); // for sockets 
         joinNameInput.value = '';
     }
     else{
@@ -456,6 +460,8 @@ socket.on('cannot join', (msg) => {
     waitingScreen.style.visibility = "visisble";
     waitingText.innerHTML = ("<b>waiting for opponent</b>");
     console.log("show waiting screen");
+
+    showError(msg);
 })
 
 
