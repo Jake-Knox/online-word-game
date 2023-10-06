@@ -10,7 +10,7 @@ const { start } = require('repl');
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/index.html');
+    res.sendFile(__dirname + '/public/index.html');
 });
 
 let nameChars = ["0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f"];
